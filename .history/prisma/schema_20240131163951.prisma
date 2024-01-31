@@ -4,11 +4,10 @@
 generator client {
   provider = "prisma-client-js"
 }
-// prisma/schema.prisma
+
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  url   = "postgresql://laukeymwaura:************@ep-tight-star-a5qntlzg.us-east-2.aws.neon.tech/next-auth?sslmode=require"
 
 }
 

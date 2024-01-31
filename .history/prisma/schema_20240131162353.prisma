@@ -4,12 +4,11 @@
 generator client {
   provider = "prisma-client-js"
 }
-// prisma/schema.prisma
-datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 
+datasource db {
+  provider     = "mysql"
+  url          = "mysql://ymn7axi7udgl161r1ha4:@aws.connect.psdb.cloud/emoloai?sslaccept=strict"
+  relationMode = "prisma"
 }
 
 model User {
