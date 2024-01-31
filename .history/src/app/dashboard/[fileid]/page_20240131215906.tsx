@@ -17,7 +17,6 @@ const Page = async ({ params }: PageProps) => {
   const { getUser } = getKindeServerSession()
   const user = getUser()
 
-  console.log(user)
   if (!user || !user.id)
     redirect(`/auth-callback?origin=dashboard/${fileid}`)
 
@@ -28,7 +27,6 @@ const Page = async ({ params }: PageProps) => {
     },
   })
 
-  console.log("file",file)
   if (!file) notFound()
 
   const plan = await getUserSubscriptionPlan()

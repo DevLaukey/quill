@@ -17,7 +17,6 @@ const Page = async ({ params }: PageProps) => {
   const { getUser } = getKindeServerSession()
   const user = getUser()
 
-  console.log(user)
   if (!user || !user.id)
     redirect(`/auth-callback?origin=dashboard/${fileid}`)
 
@@ -28,7 +27,6 @@ const Page = async ({ params }: PageProps) => {
     },
   })
 
-  console.log("file",file)
   if (!file) notFound()
 
   const plan = await getUserSubscriptionPlan()
@@ -45,7 +43,7 @@ const Page = async ({ params }: PageProps) => {
         </div>
 
         <div className='shrink-0 flex-[0.75] border-t border-gray-200 lg:w-96 lg:border-l lg:border-t-0'>
-          <ChatWrapper isSubscribed={true} fileId={file.id} />
+          <ChatWrapper isSubscribed={plan.isSubscribed} fileId={file.id} />
         </div>
       </div>
     </div>

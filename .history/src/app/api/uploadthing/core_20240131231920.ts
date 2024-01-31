@@ -49,13 +49,15 @@ const onUploadComplete = async ({
       key: file.key,
       name: file.name,
       userId: metadata.userId,
-      url: `https://utfs.io/f/${file.key}`,
-      uploadStatus: "PROCESSING",
+      url: `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`,
+      uploadStatus: 'PROCESSING',
     },
-  });
+  })
 
   try {
-    const response = await fetch(`https://utfs.io/f/${file.key}`);
+    const response = await fetch(
+      `https://uploadthing-prod.s3.us-west-2.amazonaws.com/${file.key}`
+    )
 
     const blob = await response.blob()
 
@@ -114,7 +116,6 @@ const onUploadComplete = async ({
       },
     })
   } catch (err) {
-    console.error(err)
     await db.file.update({
       data: {
         uploadStatus: 'FAILED',
