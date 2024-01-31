@@ -77,7 +77,7 @@ const ChatWrapper = ({
           <div className='flex flex-col items-center gap-2'>
             <XCircle className='h-8 w-8 text-red-500' />
             <h3 className='font-semibold text-xl'>
-              Too many pages in PDF
+             Error in scanning: Too many pages in PDF
             </h3>
             {/* <p className='text-zinc-500 text-sm'>
               Your{' '}
