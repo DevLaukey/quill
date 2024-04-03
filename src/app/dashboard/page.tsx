@@ -19,6 +19,8 @@ const Page = async () => {
     },
   });
 
+  console.log(dbUser)
+
   // If the user is not in the database, redirect to the auth-callback page
   if (!dbUser) {
     redirect("/auth-callback?origin=dashboard");
@@ -26,7 +28,7 @@ const Page = async () => {
   }
 
   // Check user role (assuming 'admin' is stored in dbUser.role)
-  if (dbUser.role == "admin") {
+  if (dbUser.role == "ADMIN") {
     redirect("/admin-dashboard"); // Redirect to an unauthorized page or show a message
     return null; // Make sure to return null or a loading indicator here
   }
