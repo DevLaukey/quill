@@ -1,8 +1,7 @@
-"use client";
-
-// pages/admin/addUser.js
+"use client"
 
 import React, { useState } from "react";
+import Modal from "./Modal";
 
 function AddUser() {
   // Dummy users data with additional details including organization
@@ -43,6 +42,8 @@ function AddUser() {
 
   // State to hold selected user
   const [selectedUser, setSelectedUser] = useState(null);
+  // State to manage modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Function to handle user selection
   const handleUserClick = (user) => {
@@ -51,10 +52,9 @@ function AddUser() {
     console.log("Selected user:", user);
   };
 
-  // Function to add a new organization
-  const addOrganization = () => {
-    // Here you can implement the logic to add a new organization
-    console.log("Adding a new organization");
+  // Function to toggle modal visibility
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
   };
 
   // Get unique organizations
@@ -71,18 +71,21 @@ function AddUser() {
               Add User to Organization
             </h1>
 
-            {/* Button to add a new organization */}
-            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center gap-2">
+            {/* Button to toggle modal */}
+            <button
+              onClick={toggleModal}
+              className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center gap-2"
+            >
               <svg
-                class="h-5 w-5 text-gray-500"
+                className="h-5 w-5 text-gray-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
                   d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
                 />
               </svg>
@@ -142,6 +145,9 @@ function AddUser() {
               </div>
             </div>
           ))}
+
+          {/* Modal for adding organization */}
+          <Modal isOpen={isModalOpen} onClose={toggleModal} />
         </div>
       </main>
     </div>
