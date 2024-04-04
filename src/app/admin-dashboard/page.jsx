@@ -1,4 +1,7 @@
-"use client"
+"use client";
+
+// pages/admin/addUser.js
+
 import React, { useState } from "react";
 
 function AddUser() {
@@ -54,71 +57,91 @@ function AddUser() {
     console.log("Adding a new organization");
   };
 
+  // Get unique organizations
+  const organizations = Array.from(
+    new Set(dummyUsers.map((user) => user.organization))
+  );
+
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
       <main className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="max-w-4xl mx-auto mt-8">
-          <h1 className="text-2xl font-bold mb-4">Add User to Organization</h1>
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-2xl font-bold mb-4">
+              Add User to Organization
+            </h1>
 
-          {/* Button to add a new organization */}
-          <button
-            onClick={addOrganization}
-            className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-          >
-            Add Organization
-          </button>
-
-          <div className="overflow-hidden border border-gray-300 rounded p-4">
-            <h2 className="text-lg font-semibold mb-2">Select User</h2>
-            <div className="overflow-x-auto">
-              <table className="min-w-full">
-                <thead>
-                  <tr>
-                    <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Name
-                    </th>
-                    <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Email
-                    </th>
-                    <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Title
-                    </th>
-                    <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Department
-                    </th>
-                    <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                      Organization
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white">
-                  {dummyUsers.map((user) => (
-                    <tr
-                      key={user.id}
-                      onClick={() => handleUserClick(user)}
-                      className="cursor-pointer hover:bg-gray-100"
-                    >
-                      <td className="px-6 py-4 whitespace-no-wrap">
-                        {user.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap">
-                        {user.email}
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap">
-                        {user.title}
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap">
-                        {user.department}
-                      </td>
-                      <td className="px-6 py-4 whitespace-no-wrap">
-                        {user.organization}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            {/* Button to add a new organization */}
+            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center gap-2">
+              <svg
+                class="h-5 w-5 text-gray-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                />
+              </svg>
+              Add a new organization
+            </button>
           </div>
+
+          {/* Render users grouped by organization */}
+          {organizations.map((org) => (
+            <div key={org} className="border border-gray-300 rounded mb-4">
+              <h2 className="text-lg font-semibold mb-2 px-4 py-2 bg-gray-200">
+                {org}
+              </h2>
+              <div className="overflow-hidden">
+                <table className=" py-5 w-full">
+                  <thead>
+                    <tr>
+                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        Name
+                      </th>
+                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        Email
+                      </th>
+                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        Title
+                      </th>
+                      <th className="px-6 py-3 bg-gray-200 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                        Department
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white">
+                    {dummyUsers
+                      .filter((user) => user.organization === org)
+                      .map((user) => (
+                        <tr
+                          key={user.id}
+                          onClick={() => handleUserClick(user)}
+                          className="cursor-pointer hover:bg-gray-100"
+                        >
+                          <td className="px-6 py-4 whitespace-no-wrap">
+                            {user.name}
+                          </td>
+                          <td className="px-6 py-4 whitespace-no-wrap">
+                            {user.email}
+                          </td>
+                          <td className="px-6 py-4 whitespace-no-wrap">
+                            {user.title}
+                          </td>
+                          <td className="px-6 py-4 whitespace-no-wrap">
+                            {user.department}
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          ))}
         </div>
       </main>
     </div>
