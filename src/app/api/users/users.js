@@ -1,7 +1,20 @@
 import { db } from "@/db";
 
 export default async function handler(req, res) {
-  if (req.method === "POST") {
+  // add a get request
+  if (req.method === "GET") {
+    try {
+      // Fetch all users from the database using db
+      const users = await db.user.findMany();
+
+      // Respond with status code 200 and the users array
+      res.status(200).json({ users });
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      // Respond with status code 500 and an error message
+      res.status(500).json({ error: "Failed to fetch users" });
+    }
+  } else if (req.method === "POST") {
     try {
       // Extract user details from request body
       const { firstName, lastName, address, city, email } = req.body;
