@@ -76,18 +76,21 @@ function AddUser() {
             <h1 className="text-2xl font-bold mb-4">
               Add User to Organization
             </h1>
-            <button
-              onClick={toggleOrgModal}
-              class="font-semibold bg-blackhover:bg-blue-700 text-black hover:cursor-pointer py-2 px-4 rounded"
-            >
-              Add Organization
-            </button>
-            <button
-              class="font-semibold bg-blackhover:bg-blue-700 text-black hover:cursor-pointer py-2 px-4 rounded"
-              onClick={toggleUserModal}
-            >
-              Add User
-            </button>
+            <div className="flex w-full justify-between items-center  ">
+              <button
+                onClick={toggleOrgModal} type="button"
+                class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              >
+                Add Organization
+              </button>
+              <button
+                type="button"
+                class="font-semibold bg-blackhover:bg-blue-700 text-black hover:cursor-pointer py-2 px-4 rounded"
+                onClick={toggleUserModal}
+              >
+                Add User
+              </button>
+            </div>
           </div>
 
           <UserModal isOpen={isUserModalOpen} toggleModal={toggleUserModal} />
