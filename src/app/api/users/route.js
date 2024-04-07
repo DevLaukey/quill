@@ -1,11 +1,14 @@
 import { db } from "@/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import {NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+
 export const dynamic = "force-dynamic"; // defaults to auto
 
+// Function to handle POST requests for creating a new user
 export async function POST(req, res) {
   try {
     const { firstName, lastName, address, city, email } = await req.json();
+    const userId = await getLoggedInUser(req, res); // Get the logged-in user's ID
     const newUser = await db.userProfile.create({
       data: {
         firstName,
@@ -13,7 +16,7 @@ export async function POST(req, res) {
         email,
         address,
         city,
-        userId: "ubib",
+        userId, // Assign the logged-in user's ID to the new user
       },
     });
 
@@ -25,46 +28,27 @@ export async function POST(req, res) {
   }
 }
 
-async function getUsers(req, res) {
+// Function to handle GET requests for fetching all users
+export async function GET(req, res) {
   try {
-    const users = await prisma.userProfile.findMany();
-    Response.status(200).json({ users });
+    const users = await db.userProfile.findMany(); // Fetch all users from the database
+    return NextResponse.json({ users });
   } catch (error) {
     console.error("Error fetching users:", error);
-    Response.status(500).json({ error: "Failed to fetch users" });
+    return NextResponse.json({ error: "Failed to fetch users" });
   }
 }
 
-// function to get the logged in user from Kinde
+// Function to get the logged-in user from Kinde
 async function getLoggedInUser(req, res) {
   try {
     const { getUser } = getKindeServerSession();
     const user = getUser();
-    const id = user.length == 0 ? user.id : "1";
-    return id
+    // If user is not logged in, return a default ID
+    const id = user.length === 0 ? user.id : "1";
+    return id;
   } catch (error) {
-    console.error("Error fetching logged in user:", error);
-  }
-}
-
-async function createUser(req, res) {
-  try {
-    const { firstName, lastName, address, city, email } = req.body;
-    console.log(firstName, lastName, address, city, email, "csdcs");
-    // const newUser = await db.userProfile.create({
-    //   data: {
-    //     firstName,
-    //     lastName,
-    //     email,
-    //     address,
-    //     city,
-    //   },
-    // });
-
-    // console.log(newUser);
-    Response.status(201).json({ user: newUser });
-  } catch (error) {
-    console.error("Error creating user:", error);
-    Response.status(500).json({ error: "Failed to create user" });
+    console.error("Error fetching logged-in user:", error);
+    throw error; // Rethrow the error to be caught in the calling function
   }
 }
