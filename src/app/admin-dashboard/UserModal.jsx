@@ -20,6 +20,7 @@ const UserModal = ({ isOpen, toggleModal }) => {
   const handleAddUser = async (e) => {
     e.preventDefault();
     try {
+      
       // Send form data to backend using fetch
       const response = await fetch("/api/users", {
         method: "POST",
