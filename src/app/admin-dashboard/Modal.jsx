@@ -53,7 +53,7 @@ function Modal({ isOpen, onClose }) {
                     htmlFor="organizationName"
                     className="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Organization Name
+                    Department Name
                   </label>
                   <input
                     type="text"

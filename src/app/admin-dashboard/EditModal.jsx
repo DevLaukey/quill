@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const OrgModal = ({ isOpen, toggleModal, users }) => {
+const EditOrgModal = ({ isOpen, toggleModal, users }) => {
   const [orgName, setOrgName] = useState("");
   const [selectedUsers, setSelectedUsers] = useState([]);
 
@@ -15,31 +15,32 @@ const OrgModal = ({ isOpen, toggleModal, users }) => {
     }
   };
 
-  const handleAddOrganization = async (e) => {
+  const handleEditOrganization = async (e) => {
     e.preventDefault();
 
     try {
-      // Send request to update user profiles with organization name and selected users
-      const response = await fetch("/api/user-profile", {
+      // Send request to update organization details including users
+      const response = await fetch("/api/edit-organization", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          action: "updateOrganizationName",
           organization: orgName,
           userIds: selectedUsers,
         }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to add organization");
+        throw new Error("Failed to edit organization");
       }
 
-      console.log("Organization added successfully");
+      console.log("Organization edited successfully");
       // Close modal
       toggleModal();
     } catch (error) {
-      console.error("Error adding organization:", error.message);
+      console.error("Error editing organization:", error.message);
       // Handle error
     }
   };
@@ -53,7 +54,7 @@ const OrgModal = ({ isOpen, toggleModal, users }) => {
         <div className="relative w-auto my-6 mx-auto max-w-3xl">
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none px-5 py-2">
             <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t py-6 px-3">
-              <h3 className="text-3xl font=semibold">Add Organization</h3>
+              <h3 className="text-3xl font=semibold">Edit Department</h3>
               <button
                 className="bg-transparent border-0 text-black float-right"
                 onClick={() => toggleModal()}
@@ -66,14 +67,14 @@ const OrgModal = ({ isOpen, toggleModal, users }) => {
             <div className="relative p-6 flex-auto">
               <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
                 <label className="block text-black text-sm font-bold mb-1">
-                  Department Name
+                  New Department Name
                 </label>
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
                   value={orgName}
                   onChange={(e) => setOrgName(e.target.value)}
                 />
-                <label className="block text-black text-sm font-bold mb-1">
+                <label className="block text-black text-sm font-bold mb-1 mt-4">
                   Select Users
                 </label>
                 <div>
@@ -102,9 +103,9 @@ const OrgModal = ({ isOpen, toggleModal, users }) => {
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 border border-blue-700 rounded"
                 type="button"
-                onClick={handleAddOrganization}
+                onClick={handleEditOrganization}
               >
-                Submit
+                Save
               </button>
             </div>
           </div>
@@ -114,4 +115,4 @@ const OrgModal = ({ isOpen, toggleModal, users }) => {
   );
 };
 
-export default OrgModal;
+export default EditOrgModal;
