@@ -16,7 +16,7 @@ export async function POST(req, res) {
         email,
         address,
         city,
-        userId, // Assign the logged-in user's ID to the new user
+        userId,
       },
     });
 
@@ -36,6 +36,25 @@ export async function GET(req, res) {
   } catch (error) {
     console.error("Error fetching users:", error);
     return NextResponse.json({ error: "Failed to fetch users" });
+  }
+}
+
+// Function to handle PUT requests for updating a user's role to Admin
+export async function PUT(req, res) {
+  try {
+    const { email,role } = await req.json();
+    const updatedUser = await db.user.update({
+      where: { email: email },
+      data: {
+        role: "ADMIN",
+      },
+    });
+
+    console.log(updatedUser);
+    return NextResponse.json({ user: updatedUser });
+  } catch (error) {
+    console.error("Error updating user role:", error);
+    return NextResponse.json({ error: "Failed to update user role" });
   }
 }
 

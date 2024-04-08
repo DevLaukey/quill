@@ -27,7 +27,7 @@ const Page = async () => {
     return null; // Make sure to return null or a loading indicator here
   }
 
-  // Check user role (assuming 'admin' is stored in dbUser.role)
+  // Check user role ('admin' is stored in dbUser.role)
   if (dbUser.role == "ADMIN") {
     redirect("/admin-dashboard"); // Redirect to an unauthorized page or show a message
     return null; // Make sure to return null or a loading indicator here

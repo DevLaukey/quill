@@ -7,6 +7,7 @@ const UserModal = ({ isOpen, toggleModal }) => {
     address: "",
     city: "",
     email: "",
+    role: "USER", // Default role
   });
 
   const handleInputChange = (e) => {
@@ -20,7 +21,6 @@ const UserModal = ({ isOpen, toggleModal }) => {
   const handleAddUser = async (e) => {
     e.preventDefault();
     try {
-      
       // Send form data to backend using fetch
       const response = await fetch("/api/users", {
         method: "POST",
@@ -31,9 +31,32 @@ const UserModal = ({ isOpen, toggleModal }) => {
       });
       const data = await response.json();
       console.log("User added:", data);
+
+      // If user is successfully added, update the role if needed
+      if (formData.role === "ADMIN") {
+        await updateUserRole(formData.email, "ADMIN");
+      }
+
       toggleModal(); // Close modal after successful submission
     } catch (error) {
       console.error("Error adding user:", error);
+      // Handle error
+    }
+  };
+
+  // Function to update user's role
+  const updateUserRole = async (email, role) => {
+    try {
+      await fetch(`/api/users`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, role }),
+      });
+      console.log("User role updated successfully");
+    } catch (error) {
+      console.error("Error updating user role:", error);
       // Handle error
     }
   };
@@ -117,6 +140,18 @@ const UserModal = ({ isOpen, toggleModal }) => {
                   onChange={handleInputChange}
                   required
                 />
+                <label className="block text-black text-sm font-bold mb-1">
+                  Role
+                </label>
+                <select
+                  className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                >
+                  <option value="USER">User</option>
+                  <option value="ADMIN">Admin</option>
+                </select>
 
                 {/* Submit button */}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
