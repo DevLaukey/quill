@@ -21,13 +21,13 @@ const EditOrgModal = ({ isOpen, toggleModal, users }) => {
     try {
       // Send request to update organization details including users
       const response = await fetch("/api/edit-organization", {
-        method: "PATCH",
+        method: "PUT", 
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          action: "updateOrganizationName",
-          organization: orgName,
+          action: "updateOrganization",
+          organization: orgName, 
           userIds: selectedUsers,
         }),
       });
