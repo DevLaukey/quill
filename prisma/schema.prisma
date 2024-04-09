@@ -38,7 +38,7 @@ model UserProfile {
   address        String
   city           String
   email          String
-  organizationName String?
+  organization String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

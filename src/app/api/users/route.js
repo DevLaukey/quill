@@ -17,6 +17,7 @@ export async function POST(req, res) {
         address,
         city,
         userId,
+        organization: "Initial",
       },
     });
 
