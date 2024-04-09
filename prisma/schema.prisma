@@ -38,8 +38,7 @@ model UserProfile {
   address        String
   city           String
   email          String
-  organization   Organization? @relation(fields: [organizationId], references: [id]) // Specify fields here
-  organizationId String?
+  organizationName String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -82,8 +81,7 @@ model Message {
 
 model Organization {
   id    String        @id @default(cuid())
-  name  String
-  users UserProfile[] // Relation field to establish a bidirectional relation with UserProfile
+  name  String        @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -95,6 +95,7 @@ function AddUser() {
                 <h2 className="text-lg font-semibold mb-2 px-4 py-2 bg-gray-200">
                   {organization !== "null" ? organization : "No Organization"}
                 </h2>
+                <Button onClick={toggleEditModal}>Edit Department</Button>
               </div>
 
               <div className="overflow-hidden">
